@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres salir conmigo, Silvana?</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffeef8;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d1105a;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+
+        .contenedor-botones {
+            position: relative;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            height: 100px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #btn-si {
+            background-color: #4caf50;
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+
+        #btn-si:hover {
+            transform: scale(1.1);
+        }
+
+        #btn-no {
+            background-color: #f44336;
+            color: white;
+            position: absolute; /* Permite que se mueva por la pantalla */
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.4);
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="pregunta">Silvana, ¿te gustaría salir conmigo? ✨</h1>
+
+    <div class="contenedor-botones">
+        <button id="btn-si">¡Sí, claro! 🤠</button>
+        <button id="btn-no">No 💔</button>
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnSi = document.getElementById('btn-si');
+        const pregunta = document.getElementById('pregunta');
+
+        // Función para mover el botón "No" a coordenadas aleatorias
+        function moverBotonNo() {
+            // Calculamos límites para que el botón no se salga por completo de la pantalla visible
+            const padding = 50;
+            const anchoMax = window.innerWidth - btnNo.offsetWidth - padding;
+            const altoMax = window.innerHeight - btnNo.offsetHeight - padding;
+
+            // Generamos posiciones aleatorias dentro del rango
+            const randomX = Math.max(padding, Math.floor(Math.random() * anchoMax));
+            const randomY = Math.max(padding, Math.floor(Math.random() * altoMax));
+
+            // Aplicamos la nueva posición
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        // Se activa cuando el cursor pasa por encima (para computadoras)
+        btnNo.addEventListener('mouseenter', moverBotonNo);
+
+        // Se activa al intentar tocarlo en pantallas táctiles (para celulares)
+        btnNo.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Evita que el clic se registre por accidente
+            moverBotonNo();
+        });
+
+        // Lo que pasa cuando por fin le da clic al botón "Sí"
+        btnSi.addEventListener('click', () => {
+            pregunta.innerHTML = "¡Esoooo! Sabía que dirías que sí, Silvana. 🥳 Armamos plan pronto.";
+            btnNo.style.display = 'none';
+            btnSi.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>
