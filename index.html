@@ -73,36 +73,34 @@
         <button id="btn-no">No 💔</button>
     </div>
 
-    <script>
+   <script>
         const btnNo = document.getElementById('btn-no');
         const btnSi = document.getElementById('btn-si');
         const pregunta = document.getElementById('pregunta');
 
-        // Función para mover el botón "No" a coordenadas aleatorias
+        // Función mejorada para que el botón NO se vaya tan lejos
         function moverBotonNo() {
-            // Calculamos límites para que el botón no se salga por completo de la pantalla visible
-            const padding = 50;
-            const anchoMax = window.innerWidth - btnNo.offsetWidth - padding;
-            const altoMax = window.innerHeight - btnNo.offsetHeight - padding;
+            // Definimos un radio máximo de movimiento (en píxeles) para que se quede cerca
+            const rangoMaximo = 120; 
 
-            // Generamos posiciones aleatorias dentro del rango
-            const randomX = Math.max(padding, Math.floor(Math.random() * anchoMax));
-            const randomY = Math.max(padding, Math.floor(Math.random() * altoMax));
+            // Generamos un movimiento aleatorio pero controlado (puede ser positivo o negativo)
+            const randomX = (Math.random() - 0.5) * 2 * rangoMaximo;
+            const randomY = (Math.random() - 0.5) * 2 * rangoMaximo;
 
-            // Aplicamos la nueva posición
-            btnNo.style.left = `${randomX}px`;
-            btnNo.style.top = `${randomY}px`;
+            // Aplicamos el movimiento usando transform para que sea más fluido y no rompa el diseño
+            btnNo.style.transform = `translate(${randomX}px, ${randomY}px)`;
         }
 
-        // Se activa cuando el cursor pasa por encima (para computadoras)
+        // Se activa al pasar el cursor (Computadoras)
         btnNo.addEventListener('mouseenter', moverBotonNo);
 
-        // Se activa al intentar tocarlo en pantallas táctiles (para celulares)
+        // Se activa al intentar tocarlo (Celulares)
         btnNo.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Evita que el clic se registre por accidente
+            e.preventDefault(); 
             moverBotonNo();
         });
 
+    
         // Lo que pasa cuando por fin le da clic al botón "Sí"
         btnSi.addEventListener('click', () => {
             pregunta.innerHTML = "¡Esoooo! Sabía que dirías que sí, Silvana. 🥳 Te veo el viernes para ir a las luchas!🥊❣💥.";
